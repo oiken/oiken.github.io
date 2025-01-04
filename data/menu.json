@@ -1,0 +1,83 @@
+{
+	"menu": {
+		"Work": {
+			"en": "Work",
+			"cn": "产品",
+			"desc": "What i did",
+			"descCn": "我做的",
+			"category": "data/work.json",
+			"activeCategory": "",
+			"url": "work/oiken.wang.html"
+		},
+		"Blog": {
+			"en": "Blog",
+			"cn": "博客",
+			"desc": "What i said",
+			"descCn": "我说的",
+			"category": "data/blog.json",
+			"activeCategory": "",
+			"url": "/blog/today.html"
+		},
+		"Found": {
+			"en": "Found",
+			"cn": "找到",
+			"desc": "What i saw",
+			"descCn": "我看到的",
+			"category": "data/found.json",
+			"activeCategory": "",
+			"url": "found/gyroflow.html"
+		},
+		"Learn": {
+			"en": "Learn",
+			"cn": "习得",
+			"desc": "What i learned",
+			"descCn": "我学到的",
+			"category": "data/learn.json",
+			"activeCategory": "",
+			"url": "learn/learn-c-in-hours.html"
+		},
+		"Log": {
+			"en": "Log",
+			"cn": "日志",
+			"desc": "How i did",
+			"descCn": "我咋做的",
+			"category": "data/log.json",
+			"activeCategory": "",
+			"url": "/log/2025-01.html"
+		}
+	},
+	"menuHeadLabel": {
+		"en": "Labels",
+		"cn": "标签"
+	},
+	"label": {
+		"Doing": {
+			"en": "Doing",
+			"cn": "进行中",
+			"color": "#1890FF",
+			"colorAlt": "蓝色，表示活跃进行",
+			"colorAltCn": "蓝色，表示活跃进行"
+		},
+		"Pending": {
+			"en": "Pending",
+			"cn": "待处理",
+			"color": "#FA8C16",
+			"colorAlt": "橙色，表示等待/警示",
+			"colorAltCn": ""
+		},
+		"Todo": {
+			"en": "To do",
+			"cn": "等待中",
+			"color": "#FAAD14",
+			"colorAlt": "黄色，表示待办",
+			"colorAltCn": ""
+		},
+		"Done": {
+			"en": "Done",
+			"cn": "已完结",
+			"color": "#52C41A",
+			"colorAlt": "绿色，表示成功完成",
+			"colorAltCn": ""
+		}
+	}
+}

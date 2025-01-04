@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="A layout example that shows off a responsive email layout.">
+	<title id="webpageTitle">Work: What I did</title>
+	<link rel="stylesheet" href="css/purecss-3.0.0/pure-min.css">
+	<link rel="stylesheet" href="css/index.css">
+	<script src="js/marked.min.js"></script>
+</head>
+
+<body>
+
+	<div id="layout" class="content pure-g">
+		<div id="nav" class="pure-u">
+			<a href="#" id="menuLink" class="nav-menu-button">Menu</a>
+
+			<div class="nav-inner">
+				<button class="primary-button pure-button">静态页</button>
+				<button id="btnSwitchLanguage" class="primary-button pure-button">Compose</button>
+
+				<div class="pure-menu">
+					<ul id="menuList" class="pure-menu-list">
+						<li id="menuItemInbox" class="pure-menu-item pure-menu-active">
+							<a href="#" class="pure-menu-link">
+								Inbox <span id="menuItemInboxCount" class="email-count">(2)</span>
+							</a>
+						</li>
+						<li id="menuHeadLabel" class="pure-menu-heading">Labels</li>
+						<li id="menuItemLabelPersonal" class="pure-menu-item pure-menu-active">
+							<a href="#" class="pure-menu-link">
+								<span class="email-label-personal"></span>Personal
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div id="categoryList" class=" pure-g pure-u-1">
+			<div id="categoryItemId" class="email-item email-item-selected pure-g">
+				<div class="pure-u">
+					<img width="64" height="64" alt="Tilo Mitra&#x27;s avatar" class="email-avatar" src="">
+				</div>
+
+				<div class="pure-u-3-4">
+					<h5 class="email-name">Tilo Mitra</h5>
+					<h4 class="email-subject">Hello from Toronto</h4>
+					<p class="email-desc">
+						Hey, I just wanted to check in with you from Toronto. I got here earlier today.
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div id="main" class="pure-u-1">
+			<div class="email-content">
+				<div class="email-content-header pure-g">
+					<div class="pure-u-10-11">
+						<!-- 原来是 <div class="pure-u-1-2"> -->
+						<h1 id="main-title" class="email-content-title">Hello from Toronto</h1>
+						<p id="main-subtitle" class="email-content-subtitle">
+							From <a>Tilo Mitra</a> at <span>3:56pm, April 3, 2021</span>
+						</p>
+					</div>
+
+					<!-- 暂时不需要这些按钮 <div class="email-content-controls pure-u-1-2">
+						<button class="secondary-button pure-button">Reply</button>
+						<button class="secondary-button pure-button">Forward</button>
+						<button class="secondary-button pure-button">Move to</button>
+					</div> -->
+				</div>
+
+				<div id="div-markdown-file" class="email-content-body">
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+						Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+					</p>
+					<p>
+						Regards,<br>
+						Tilo
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 放在底部以确保 DOM 加载完成 -->
+	<script src="js/index.js"></script>
+</body>
+
+</html>
