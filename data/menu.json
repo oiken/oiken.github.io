@@ -51,33 +51,33 @@
 		"cn": "标签"
 	},
 	"label": {
-		"Doing": {
-			"en": "Doing",
-			"cn": "进行中",
-			"color": "#1890FF",
-			"colorAlt": "蓝色，表示活跃进行",
-			"colorAltCn": "蓝色，表示活跃进行"
+		"Planned": {
+			"en": "Planned",
+			"cn": "萌芽中",
+			"symbol": "🌱",
+			"symbolTitle": "Seedling, indicates a task is planned but not yet started",
+			"symbolTitleCn": "萌芽中，表示任务已计划但尚未开始"
+		},
+		"Working": {
+			"en": "Working",
+			"cn": "工作中",
+			"symbol": "✍️",
+			"symbolTitle": "Writing Hand, indicates the task is actively being worked on",
+			"symbolTitleCn": "正书写，表示任务正在积极工作中"
 		},
 		"Pending": {
 			"en": "Pending",
 			"cn": "待处理",
-			"color": "#FA8C16",
-			"colorAlt": "橙色，表示等待/警示",
-			"colorAltCn": ""
-		},
-		"Todo": {
-			"en": "To do",
-			"cn": "等待中",
-			"color": "#FAAD14",
-			"colorAlt": "黄色，表示待办",
-			"colorAltCn": ""
+			"symbol": "⏳",
+			"symbolTitle": "Hourglass, indicates the task is waiting for action or resolution",
+			"symbolTitleCn": "沙漏斗，表示任务等待处理或解决"
 		},
 		"Done": {
 			"en": "Done",
-			"cn": "已完结",
-			"color": "#52C41A",
-			"colorAlt": "绿色，表示成功完成",
-			"colorAltCn": ""
+			"cn": "已完成",
+			"symbol": "✅",
+			"symbolTitle": "Check Mark, indicates the task is successfully completed",
+			"symbolTitleCn": "绿色勾，表示任务已成功完成"
 		}
 	}
 }

@@ -166,11 +166,11 @@ a {
 }
 
 .email-label {
-	width: 15px;
-	height: 15px;
+	width: 20px;
+	height: 19px;
 	display: inline-block;
 	margin-right: 0.5em;
-	border-radius: 3px;
+	border-radius: 4px;
 }
 
 
@@ -248,6 +248,10 @@ a {
 	height: 40px;
 }
 
+.markdown-img-container {
+	max-width: 100%;
+	height: auto;
+}
 
 /*
  * -- TABLET (AND UP) MEDIA QUERIES --

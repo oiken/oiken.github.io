@@ -6,5 +6,9 @@
 	"btnSwitchLanguage": {
 		"en": "中文版",
 		"cn": "English"
+	},
+	"btnToStaticPages": {
+		"en": "静态页面",
+		"cn": "Static Pages"
 	}
 }

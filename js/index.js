@@ -7,7 +7,7 @@ const labelIdPrefix = 'menuLabel';
 const categoryIdPrefix = 'categoryItem';
 
 let currentState = {
-	isEnglish: true,
+	isEnglish: false,
 	activeMenu: 'Work',
 	activeLabel: '',
 
@@ -17,7 +17,6 @@ let currentState = {
 
 // 初始化
 document.addEventListener('DOMContentLoaded', function () {
-
 	requestJson('data/view.json', false, null,
 		function (jsonData) {
 			renderView(jsonData, currentState.isEnglish, currentState.activeMenu);
@@ -40,11 +39,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // 点击处理
 function initEvents() {
+	const btnToStaticPagesId = "btnToStaticPages";
+	const btnToStaticPages = document.getElementById(btnToStaticPagesId);
+	btnToStaticPages.addEventListener('click', function (e) {
+		const msg = currentState.isEnglish ? 'Not ready yet' : '还没有准备好';
+		alert(msg);
+	});
 	const btnSwitchLanguageId = "btnSwitchLanguage";
 	const btnSwitchLanguage = document.getElementById(btnSwitchLanguageId);
 	btnSwitchLanguage.addEventListener('click', function (e) {
 		if (currentState.viewJsonData != null && currentState.menuJsonData != null) {
 			currentState.isEnglish = !currentState.isEnglish;
+			const btnToStaticPagesText =
+				currentState.isEnglish ? currentState.viewJsonData[btnToStaticPagesId].en : currentState.viewJsonData[btnToStaticPagesId].cn;
+			btnToStaticPages.textContent = escape(btnToStaticPagesText);
 			renderView(currentState.viewJsonData, currentState.isEnglish, currentState.viewJsonData.activeMenu);
 			renderMenu(currentState.menuJsonData, currentState.isEnglish, currentState.activeMenu, currentState.activeLabel);
 			requestAndRenderCategory();
@@ -82,10 +90,10 @@ function renderMenu(jsonData, isEnglish, activeMenuKey, activeLabel) {
 
 	if (jsonData.menu.hasOwnProperty(activeMenuKey)) {
 		if (isEnglish) { // 修改网页标题
-			document.documentElement.title = escape(jsonData.menu[activeMenuKey].en
+			document.title = escape(jsonData.menu[activeMenuKey].en
 				+ ': ' + jsonData.menu[activeMenuKey].desc);
 		} else {
-			document.documentElement.title = escape(jsonData.menu[activeMenuKey].cn
+			document.title = escape(jsonData.menu[activeMenuKey].cn
 				+ ': ' + jsonData.menu[activeMenuKey].descCn);
 		}
 	}
@@ -97,10 +105,11 @@ function renderMenu(jsonData, isEnglish, activeMenuKey, activeLabel) {
 			const pureMenuActive = activeMenuKey === key ? ' pure-menu-active' : '';
 			const item = jsonData.menu[key];
 			const text = isEnglish ? item.en : item.cn;
+			const desc = isEnglish ? item.desc : item.descCn;
 
 			menuHTML += '<li class="pure-menu-item' + pureMenuActive + '">'
 				+ '<a id="' + itemId + '"'
-				+ ' href="#" class="pure-menu-link">'
+				+ ' href="#" class="pure-menu-link" title="' + escape(desc) + '">'
 				+ escape(text)
 				+ ' <span id="' + menuItemCountId + '" class="email-count">'
 				+ '</span></a></li>';
@@ -120,11 +129,11 @@ function renderMenu(jsonData, isEnglish, activeMenuKey, activeLabel) {
 			const labelActive = activeLabel === labelKey ? ' pure-menu-active' : '';
 			const labelItem = jsonData.label[labelKey];
 			const labelText = escape(isEnglish ? labelItem.en : labelItem.cn);
-			const colorAlt = escape(isEnglish ? labelItem.colorAlt : labelItem.colorAltCn);
+			const symbolTitle = escape(isEnglish ? labelItem.symbolTitle : labelItem.symbolTitleCn);
 			menuHTML += '<li class="pure-menu-item' + labelActive + '">' +
-				'<a id="' + itemId + '" href="#" class="pure-menu-link">' +
-				'<span class="email-label" style="background-color: ' + labelItem.color +
-				'" alt="' + colorAlt + '"></span>' + escape(labelText) + '</a></li>';
+				'<a id="' + itemId + '" href="#" class="pure-menu-link" title="' + symbolTitle + '">' +
+				'<span class="email-label" style="background-color: #ffffff;">' + labelItem.symbol + '</span>' +
+				escape(labelText) + '</a></li>';
 		}
 	}
 
@@ -222,7 +231,8 @@ function setCategoryNumOfMenu(jsonData) {
 	let sum = 0;
 	for (let key in jsonData) {
 		if (jsonData.hasOwnProperty(key)) {
-			sum += 1;
+			const item = jsonData[key];
+			if (item.visible === 'true') sum += 1;
 		}
 	}
 	const menuItemCountId = menuItemCountIdPrefix + currentState.activeMenu;
@@ -256,6 +266,7 @@ function renderCategory(jsonData, labelData, isEnglish, activeCategory) {
 		for (let key in jsonData) {
 			if (jsonData.hasOwnProperty(key)) {
 				const item = jsonData[key];
+				if (item.visible === 'false') continue;
 				const itemId = categoryIdPrefix + key;
 				let isActive = activeCategory === key;
 				let activeItem = '';
@@ -267,12 +278,12 @@ function renderCategory(jsonData, labelData, isEnglish, activeCategory) {
 
 				const labelItem = labelData[item.label];
 				const labelText = isEnglish ? labelItem.en : labelItem.cn;
-				const colorAlt = isEnglish ? labelItem.colorAlt : labelItem.colorAltCn;
+				const symbolTitle = isEnglish ? labelItem.symbolTitle : labelItem.symbolTitleCn;
 				html += '<div id="' + itemId + '" class="email-item ' + activeItem + ' pure-g">'
 					+ '<div class="pure-u-1-6">'
-					+ '<div class="pure-g"><span class="pure-u-1 email-label" style="background-color:' + labelItem.color
-					+ '" title="' + escape(colorAlt)
-					+ '"></span><text class="pure-u-1" style="font-size:0.5em;">' + escape(labelText) + '</text></div>'
+					+ '<div class="pure-g"><span class="email-label" style="margin: 0.3em;" title="'
+					+ symbolTitle + '">' + labelItem.symbol + '</span>'
+					+ '<text class="pure-u-1" style="font-size: 0.5em;">' + escape(labelText) + '</text></div>'
 					// + '<img width="64" height="64" alt="' + escape(logoAlt) + '"'
 					// + ' class="email-avatar" src="' + item.logoFile + '">'
 					+ '</div>'
@@ -294,7 +305,10 @@ function renderCategory(jsonData, labelData, isEnglish, activeCategory) {
 						subtitle.innerHTML = '<span>类型是：</span><a href="#">' + escape(item.kindCn) + ' </a>'
 							+ ' <span>开发时间从</span> ' + escape(item.devFrom) + ' <span>到</span> ' + escape(item.devTo);
 					// 把 md 文件装载到组件：
-					requestMarkdownFile(item.mdFilePath, false, null,
+					const markdownDiv = document.getElementById('div-markdown-file');
+					markdownDiv.innerHTML = '';
+					const mdFilePath = isEnglish ? item.mdFilePath : item.mdFilePathCn;
+					requestMarkdownFile(mdFilePath, false, null,
 						function (markdownFile) {
 							// 转换 markdown 为 HTML 并显示
 							var markdownToHtml = marked.parse(markdownFile);

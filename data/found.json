@@ -1,1 +1,27 @@
-{}
+{
+	"Eyebot": {
+		"name": "Test optical and buy glasses",
+		"nameCn": "检测视力并购买眼镜",
+		"label": "Planned",
+		"logoFile": "",
+		"logoAlt": "Logo image",
+		"logoAltCn": "Logo 图片",
+		"devFrom": "Not now",
+		"devTo": "Not now",
+		"desc": "",
+		"descCn": "",
+		"platform": "Robot",
+		"language": "C/C++, Rust, Python",
+		"kind": "Hardware",
+		"kindCn": "硬件",
+		"mdFilePath": "md/found/Eyebot.md",
+		"mdFilePathCn": "md/found/Eyebot_Cn.md",
+		"url": "https://www.retailtouchpoints.com/features/news-briefs/zenni-optical-partners-with-eyebot-to-deploy-vision-testing-kiosks",
+		"visible": "true"
+	},
+	"AI时代，要做什么": {
+		"url": "https://writing.nikunjk.com/p/software-has-made-us-soft",
+		"point": "",
+		"content": "成功不再是构建工具，而是端到端地承担问题。价值正在从那些制作软件的人转移到那些知道如何使用它的人。医院重新构想护理。工作室重塑讲故事的方式。当完整的解决方案包括运营和硬件成本时，评估软件初创公司的传统模式就会崩溃。难点不再是构建，而是了解要构建什么以及为什么构建。在编写一行代码之前，问问自己：您是在解决完整的结果，还是只是构建 AI 明天可以生成的另一个工具？工具无关紧要。结果会"
+	}
+}
