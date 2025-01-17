@@ -8,6 +8,7 @@ Mount 115 cloud storage as a local folder, use a proxy to log in, and manage it 
 - [x] Obtain login cookie using a proxy server
 - [x] Provide a web interface for settings and management
 - [x] Mount 115 cloud storage as a local folder after successful login
+- [x] Restart service
 - [x] In the local folder, you can: browse, download, rename, delete, search, create new folders
 - [x] In a browser, you can: browse, download
 - [x] Run on a OneCloud box; share this folder with other devices on the same LAN using a Samba server. Due to device performance limitations, the download speed is slightly slower than when running on a local machine.
