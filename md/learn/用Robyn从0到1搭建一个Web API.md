@@ -35,14 +35,10 @@ Successfully installed dill-0.3.9 inquirerpy-0.3.4 multiprocess-0.70.14 orjson-3
 我选用了 sqlite ，其它太复杂  
 
 生成了脚手架，后面加了解决乱码和查看 cpu 核心和自己启动的进程数量，：  
-
-```app.py
+```python
 import sqlite3
-import os
-import multiprocessing
 
 from robyn import Robyn
-from robyn.responses import Response
 
 app = Robyn(__file__)
 
@@ -57,27 +53,13 @@ def index():
     res = cur.execute("SELECT name FROM sqlite_master")
     th = res.fetchone()
     table_name = th[0]
+    return f"Hello World! {table_name}"
 
-    worker_id = os.getpid()  # 获取当前 worker 的进程 ID
-    num_workers = app.config.workers  # 获取配置的 worker 数量
-    num_processes = multiprocessing.cpu_count()  # 获取CPU核心数，即进程数
-
-    html_content = f"<h1>Hello! sqlite 数据库表的名字是 {table_name}</h1>\
-        <h2>Worker ID: {worker_id}, Number of Workers: {num_workers}, Number of Processes: {num_processes}</h2>"
-    return Response(
-        description=html_content.encode("utf-8"),  # 解决中文乱码
-        headers={"Content-Type": "text/html; charset=utf-8"},
-        status_code=200
-    )
-
-@app.post("/echo")
-def echo(request):
-    data = request.body
-    return {"echo": data}
 
 if __name__ == "__main__":
-    app.start(host="0.0.0.0", port=80)
+    app.start(host="0.0.0.0", port=8080)
 ```
+
 
 * 运行，我发布时用 --fast 自动设置快跑的参数，开发时用 --dev 修改了文件自动重启服务器， 但 --fast --dev 不能共存，只能用一个，试过了，--faset 也就设置了两个 worker。但我的内核有 12个，所以可以设置12个核心。另外 --open-browser 启动后自动打开浏览器  
 python3 -m robyn buzzing_cc_copy/app.py --dev --open-browser  
@@ -111,3 +93,77 @@ Gunicorn -w 4 -k unicorn.workers.UvicornWorker app:app
 因为单个 Robyn 应用： 就像一个单人小作坊，只能处理少量订单，效率较低。
 Gunicorn + Uvicorn： 就像一个大型工厂，拥有多条生产线，可以同时处理大量订单，效率高，并且有备份机制，不容易崩溃。
 因此，Gunicorn + Uvicorn 的组合能够显著提升 Robyn 应用的性能、可靠性和可扩展性，使其更适合在生产环境中使用。这是单个 Robyn 应用无法单独实现的。
+
+
+## 最终代码：
+```python
+```app.py
+import sqlite3
+import os
+import multiprocessing
+import json
+
+from robyn import Robyn, ALLOW_CORS
+from robyn.responses import Response
+
+app = Robyn(__file__)
+ALLOW_CORS(app, origins=["http://localhost:80/"])  # 因为是 api，所以跨域支持（CORS）
+
+
+@app.get("/")
+def index():
+    # your db name
+    conn = sqlite3.connect("example.db")
+    cur = conn.cursor()
+    cur.execute("DROP TABLE IF EXISTS test")
+    cur.execute("CREATE TABLE test(column_1, column_2)")
+    res = cur.execute("SELECT name FROM sqlite_master")
+    th = res.fetchone()
+    table_name = th[0]
+
+    worker_id = os.getpid()  # 获取当前 worker 的进程 ID
+    num_workers = app.config.workers  # 获取配置的 worker 数量
+    num_processes = multiprocessing.cpu_count()  # 获取CPU核心数，即进程数
+
+    html_content = f"<h1>Hello! sqlite 数据库表的名字是 {table_name}</h1>\
+        <h2>Worker ID: {worker_id}, Number of Workers: {num_workers}, Number of Processes: {num_processes}</h2>"
+    return Response(
+        description=html_content.encode("utf-8"),  # 解决中文乱码
+        headers={"Content-Type": "text/html; charset=utf-8"},
+        status_code=200
+    )
+
+
+@app.post("/json")
+def handle_json(request):
+    data = json.loads(request.body)
+    name = data.get("name", "Python")
+    return {"message": f"Hello,{name}!"}
+
+
+@app.get("/greet")
+def greet(request):
+    name = request.query_params.get("name", "Stranger")
+    data = {"greeting": f"Hi, {name}!"}
+    return Response(
+        description=json.dumps(data),
+        headers={"Content-Type": "text/json; charset=utf-8"},  # 解决中文乱码
+        status_code=200
+    )
+
+
+@app.post("/echo")
+def echo(request):
+    data = request.body
+    return {"echo": data}
+
+# js 在 devTools 的控制台测试：fetch("/json", {  method: "POST",  headers: {    "Content-Type": "application/json",   },  body: JSON.stringify({   "name":"花小姐的春天",   key1: "字符串的值",    key2: 32123,  }),       })  .then((response) => response.json())  .then((data) => console.log("Response:", data))  .catch((error) => console.error("Error:", error));
+# js 在 devTools 的控制台测试：fetch("/greet?name=花小姐的春天").then((response) => response.json()).then((data) => console.log("Response:", data)).catch((error) => console.error("Error:", error));
+# js 在 devTools 的控制台测试：fetch("/echo", {  method: "POST",  headers: {    "Content-Type": "application/json",   },  body: JSON.stringify({      key1: "字符串的值",    key2: 32123,  }),       })  .then((response) => response.json())  .then((data) => console.log("Response:", data))  .catch((error) => console.error("Error:", error));
+
+
+if __name__ == "__main__":
+    app.start(host="0.0.0.0", port=80)
+```
+启动命令：  
+python3 -m robyn buzzing_cc_copy/app.py --dev --open-browser
