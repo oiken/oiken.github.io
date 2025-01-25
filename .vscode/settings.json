@@ -1,0 +1,13 @@
+{
+	"files.associations": {
+		"iostream": "cpp",
+		"string": "cpp",
+		"__locale": "c",
+		"locale": "c",
+		"span": "c",
+		"hash_map": "c",
+		"map": "c",
+		"set": "c",
+		"unordered_map": "c"
+	}
+}
